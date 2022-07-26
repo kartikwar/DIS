@@ -611,8 +611,10 @@ if __name__ == "__main__":
     dataset_1, dataset_1 = {}, {}
 
     dataset_tr = {"name": "DIS5K-TR",
-                 "im_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/imgs/train",
-                 "gt_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/alpha",
+                #  "im_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/imgs/train",
+                "im_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v1/good_annos/fg",
+                #  "gt_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/alpha",
+                "gt_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v1/good_annos/alpha",
                  "im_ext": ".jpg",
                  "gt_ext": ".jpg",
                  "cache_dir":"/home/ubuntu/kartik/DIS/DIS5k-Cache/DIS-TR"}
@@ -668,8 +670,8 @@ if __name__ == "__main__":
     hypar = {}
 
     ## -- 2.1. configure the model saving or restoring path --
-    hypar["mode"] = "train"
-    # hypar["mode"] = "valid"
+    # hypar["mode"] = "train"
+    hypar["mode"] = "valid"
     ## "train": for training,
     ## "valid": for validation and inferening,
     ## in "valid" mode, it will calculate the accuracy as well as save the prediciton results into the "hypar["valid_out_dir"]", which shouldn't be ""
@@ -684,8 +686,8 @@ if __name__ == "__main__":
         hypar["gt_encoder_model"] = ""
     else: ## configure the segmentation output path and the to-be-used model weights path
         hypar["valid_out_dir"] = "../your-results/"##"../DIS5K-Results-test" ## output inferenced segmentation maps into this fold
-        hypar["model_path"] = "../saved_models/IS-Net" ## load trained weights from this path
-        hypar["restore_model"] = "isnet.pth"##"isnet.pth" ## name of the to-be-loaded weights
+        hypar["model_path"] = "../saved_models/customer-dataset-v16" ## load trained weights from this path
+        hypar["restore_model"] = "gpu_itr_10_traLoss_4.1096_traTarLoss_0.5828_valLoss_2.5425_valTarLoss_0.2606_maxF1_0.0_mae_0.1802_time_0.033889.pth"##"isnet.pth" ## name of the to-be-loaded weights
 
     # if hypar["restore_model"]!="":
     #     hypar["start_ite"] = int(hypar["restore_model"].split("_")[2])
@@ -712,8 +714,10 @@ if __name__ == "__main__":
     hypar["model"] = ISNetDIS() #U2NETFASTFEATURESUP()
     hypar["early_stop"] = 20 ## stop the training when no improvement in the past 20 validation periods, smaller numbers can be used here e.g., 5 or 10.
     hypar["model_save_fre"] = 2000 ## valid and save model weights every 2000 iterations
+    hypar["model_save_fre"] = 100 ## valid and save model weights every 2000 iterations
 
     hypar["batch_size_train"] = 8 ## batch size for training
+    hypar["batch_size_train"] = 4 ## batch size for training
     hypar["batch_size_valid"] = 1 ## batch size for validation and inferencing
     print("batch size: ", hypar["batch_size_train"])
 
