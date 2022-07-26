@@ -27,7 +27,7 @@ def get_im_gt_name_dict(datasets, flag='valid'):
     for i in range(len(datasets)):
         print("--->>>", flag, " dataset ",i,"/",len(datasets)," ",datasets[i]["name"],"<<<---")
         tmp_im_list, tmp_gt_list = [], []
-        tmp_im_list = glob(datasets[i]["im_dir"]+os.sep+'*'+datasets[i]["im_ext"])
+        tmp_im_list = glob(datasets[i]["im_dir"]+os.sep+'*')
 
         # img_name_dict[im_dirs[i][0]] = tmp_im_list
         print('-im-',datasets[i]["name"],datasets[i]["im_dir"], ': ',len(tmp_im_list))
@@ -35,7 +35,7 @@ def get_im_gt_name_dict(datasets, flag='valid'):
         if(datasets[i]["gt_dir"]==""):
             print('-gt-', datasets[i]["name"], datasets[i]["gt_dir"], ': ', 'No Ground Truth Found')
         else:
-            tmp_gt_list = [datasets[i]["gt_dir"]+os.sep+x.split(os.sep)[-1].split(datasets[i]["im_ext"])[0]+datasets[i]["gt_ext"] for x in tmp_im_list]
+            tmp_gt_list = [datasets[i]["gt_dir"]+os.sep+x.split(os.sep)[-1] for x in tmp_im_list]
             # lbl_name_dict[im_dirs[i][0]] = tmp_gt_list
             print('-gt-', datasets[i]["name"],datasets[i]["gt_dir"], ': ',len(tmp_gt_list))
 
