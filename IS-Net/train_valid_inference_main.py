@@ -611,10 +611,10 @@ if __name__ == "__main__":
     dataset_1, dataset_1 = {}, {}
 
     dataset_tr = {"name": "DIS5K-TR",
-                #  "im_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/imgs/train",
-                "im_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v1/good_annos/fg",
-                #  "gt_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/alpha",
-                "gt_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v1/good_annos/alpha",
+                 "im_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/imgs/train",
+                # "im_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v1/good_annos/fg",
+                 "gt_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/alpha",
+                # "gt_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v1/good_annos/alpha",
                  "im_ext": ".jpg",
                  "gt_ext": ".jpg",
                  "cache_dir":"/home/ubuntu/kartik/DIS/DIS5k-Cache/DIS-TR"}
@@ -670,8 +670,8 @@ if __name__ == "__main__":
     hypar = {}
 
     ## -- 2.1. configure the model saving or restoring path --
-    # hypar["mode"] = "train"
-    hypar["mode"] = "valid"
+    hypar["mode"] = "train"
+    # hypar["mode"] = "valid"
     ## "train": for training,
     ## "valid": for validation and inferening,
     ## in "valid" mode, it will calculate the accuracy as well as save the prediciton results into the "hypar["valid_out_dir"]", which shouldn't be ""
