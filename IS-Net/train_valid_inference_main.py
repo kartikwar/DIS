@@ -652,22 +652,24 @@ if __name__ == "__main__":
                  "gt_ext": ".png",
                  "cache_dir":"../DIS5K-Cache/DIS-TE4"}
     ### test your own dataset
-    dataset_demo = {"name": "your-dataset",
-                 "im_dir": "../your-dataset/im",
+    dataset_demo = {"name": "test-800-dataset",
+                 "im_dir": "/home/ubuntu/kartik/datasets/test-dataset/images",
                  "gt_dir": "",
                  "im_ext": ".jpg",
                  "gt_ext": "",
-                 "cache_dir":"../your-dataset/cache"}
+                 "cache_dir":"/home/ubuntu/kartik/DIS/cache_dir"}
 
     train_datasets = [dataset_tr] ## users can create mutiple dictionary for setting a list of datasets as training set
     # valid_datasets = [dataset_vd] ## users can create mutiple dictionary for setting a list of datasets as vaidation sets or inference sets
     valid_datasets = [dataset_vd] # dataset_vd, dataset_te1, dataset_te2, dataset_te3, dataset_te4] # and hypar["mode"] = "valid" for inference,
+    valid_datasets = [dataset_demo]
 
     ### --------------- STEP 2: Configuring the hyperparamters for Training, validation and inferencing ---------------
     hypar = {}
 
     ## -- 2.1. configure the model saving or restoring path --
     hypar["mode"] = "train"
+    hypar["mode"] = "valid"
     ## "train": for training,
     ## "valid": for validation and inferening,
     ## in "valid" mode, it will calculate the accuracy as well as save the prediciton results into the "hypar["valid_out_dir"]", which shouldn't be ""
