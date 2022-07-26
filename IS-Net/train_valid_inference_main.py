@@ -611,11 +611,11 @@ if __name__ == "__main__":
     dataset_1, dataset_1 = {}, {}
 
     dataset_tr = {"name": "DIS5K-TR",
-                 "im_dir": "../DIS5K/DIS-TR/im",
-                 "gt_dir": "../DIS5K/DIS-TR/gt",
+                 "im_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/imgs/train",
+                 "gt_dir": "/home/ubuntu/kartik/datasets/background-knockout-dataset-v16/good_annos/alpha",
                  "im_ext": ".jpg",
-                 "gt_ext": ".png",
-                 "cache_dir":"../DIS5K-Cache/DIS-TR"}
+                 "gt_ext": ".jpg",
+                 "cache_dir":"/home/ubuntu/kartik/DIS/DIS5k-Cache/DIS-TR"}
 
     dataset_vd = {"name": "DIS5K-VD",
                  "im_dir": "../DIS5K/DIS-VD/im",
@@ -669,7 +669,7 @@ if __name__ == "__main__":
 
     ## -- 2.1. configure the model saving or restoring path --
     hypar["mode"] = "train"
-    hypar["mode"] = "valid"
+    # hypar["mode"] = "valid"
     ## "train": for training,
     ## "valid": for validation and inferening,
     ## in "valid" mode, it will calculate the accuracy as well as save the prediciton results into the "hypar["valid_out_dir"]", which shouldn't be ""
@@ -678,7 +678,7 @@ if __name__ == "__main__":
 
     if hypar["mode"] == "train":
         hypar["valid_out_dir"] = "" ## for "train" model leave it as "", for "valid"("inference") mode: set it according to your local directory
-        hypar["model_path"] ="../saved_models/IS-Net-test" ## model weights saving (or restoring) path
+        hypar["model_path"] ="../saved_models/customer-dataset-v16" ## model weights saving (or restoring) path
         hypar["restore_model"] = "" ## name of the segmentation model weights .pth for resume training process from last stop or for the inferencing
         hypar["start_ite"] = 0 ## start iteration for the training, can be changed to match the restored training process
         hypar["gt_encoder_model"] = ""
