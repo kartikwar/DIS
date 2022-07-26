@@ -1,1 +1,5 @@
 *.pth
+*.pyc
+cache_dir/
+your-results/
+__pycache__/
