@@ -28,14 +28,24 @@ def get_im_gt_name_dict(datasets, flag='valid'):
         print("--->>>", flag, " dataset ",i,"/",len(datasets)," ",datasets[i]["name"],"<<<---")
         tmp_im_list, tmp_gt_list = [], []
         tmp_im_list = glob(datasets[i]["im_dir"]+os.sep+'*')
-        
+        tmp_im_list = sorted(tmp_im_list)
         
         keep_ratio = 0.95
         indices_keep = int(keep_ratio * len(tmp_im_list))
         all_indices = list(range(len(tmp_im_list)))
         import random
-        random.seed(10)
-        train_indices = random.sample(all_indices, indices_keep)
+        
+        indices_path = '/home/ubuntu/kartik/DIS/indices.json'
+        
+        if os.path.exists(indices_path):
+            with open(indices_path) as f:
+                train_indices = json.load(f)
+        else:
+            train_indices = random.sample(all_indices, indices_keep)
+            with open(indices_path, 'w') as f:
+                train_indices_obj = json.dumps(train_indices)
+                f.write(train_indices_obj)
+            
         # train_nm_im_gt_list = [train_nm_im_gt_list[i] for i in train_indices]
         val_indices = [ind for ind in all_indices if ind not in train_indices]
         # valid_nm_im_gt_list = [train_nm_im_gt_list[i] for i in val_indices]
