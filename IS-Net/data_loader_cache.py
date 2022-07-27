@@ -124,7 +124,9 @@ def create_dataloaders(name_im_gt_list, cache_size=[], cache_boost=True, my_tran
     return gos_dataloaders, gos_datasets
 
 def im_reader(im_path):
-    return io.imread(im_path)
+    img = io.imread(im_path)
+    # print(img.shape)
+    return img
 
 def im_preprocess(im,size):
     if len(im.shape) < 3:
@@ -304,6 +306,12 @@ class GOSDatasetCache(Dataset):
             im_id = im_id.replace('.jpg', '')
             print("im_path: ", im_path)
             im = im_reader(im_path)
+            if len(im.shape) == 2:
+                from skimage.color import gray2rgb
+                im = gray2rgb(im)
+            im = im[:,:,:3]
+            assert(im.shape[2] == 3)
+            print(im.shape)
             im, im_shp = im_preprocess(im,self.cache_size)
             im_cache_file = os.path.join(cache_folder,self.dataset["data_name"][i]+"_"+im_id + "_im.pt")
             torch.save(im,im_cache_file)

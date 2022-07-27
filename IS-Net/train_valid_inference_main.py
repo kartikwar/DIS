@@ -523,6 +523,7 @@ def main(train_datasets,
         print("--- create training dataloader ---")
         ## collect training dataset
         train_nm_im_gt_list = get_im_gt_name_dict(train_datasets, flag="train")
+        valid_cache_dir = valid_datasets[0]['cache_dir']
         valid_datasets = train_datasets.copy()
         ## build dataloader for training datasets
         train_dataloaders, train_datasets = create_dataloaders(train_nm_im_gt_list,
@@ -549,6 +550,7 @@ def main(train_datasets,
     print("--- create valid dataloader ---")
     ## build dataloader for validation or testing
     valid_nm_im_gt_list = get_im_gt_name_dict(valid_datasets, flag="valid")
+    valid_nm_im_gt_list[0]['cache_dir'] = valid_cache_dir
     ## build dataloader for training datasets
     valid_dataloaders, valid_datasets = create_dataloaders(valid_nm_im_gt_list,
                                                           cache_size = hypar["cache_size"],
@@ -682,7 +684,7 @@ if __name__ == "__main__":
     if hypar["mode"] == "train":
         hypar["valid_out_dir"] = "" ## for "train" model leave it as "", for "valid"("inference") mode: set it according to your local directory
         hypar["model_path"] ="/home/ubuntu/kartik/DIS/saved_models/customer-dataset-v16" ## model weights saving (or restoring) path
-        hypar["restore_model"] = "" ## name of the segmentation model weights .pth for resume training process from last stop or for the inferencing
+        hypar["restore_model"] = "/home/ubuntu/kartik/DIS/saved_models/customer-dataset-v16/gpu_itr_3400_traLoss_2.8048_traTarLoss_0.4452_valLoss_2.7121_valTarLoss_0.4203_maxF1_0.7656_mae_0.2592_time_0.035212.pth" ## name of the segmentation model weights .pth for resume training process from last stop or for the inferencing
         hypar["start_ite"] = 0 ## start iteration for the training, can be changed to match the restored training process
         hypar["gt_encoder_model"] = ""
     else: ## configure the segmentation output path and the to-be-used model weights path
@@ -715,7 +717,7 @@ if __name__ == "__main__":
     hypar["model"] = ISNetDIS() #U2NETFASTFEATURESUP()
     hypar["early_stop"] = 20 ## stop the training when no improvement in the past 20 validation periods, smaller numbers can be used here e.g., 5 or 10.
     hypar["model_save_fre"] = 2000 ## valid and save model weights every 2000 iterations
-    hypar["model_save_fre"] = 100 ## valid and save model weights every 2000 iterations
+    # hypar["model_save_fre"] = 100 ## valid and save model weights every 2000 iterations
 
     hypar["batch_size_train"] = 8 ## batch size for training
     hypar["batch_size_train"] = 4 ## batch size for training
