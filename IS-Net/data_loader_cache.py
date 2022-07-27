@@ -28,6 +28,22 @@ def get_im_gt_name_dict(datasets, flag='valid'):
         print("--->>>", flag, " dataset ",i,"/",len(datasets)," ",datasets[i]["name"],"<<<---")
         tmp_im_list, tmp_gt_list = [], []
         tmp_im_list = glob(datasets[i]["im_dir"]+os.sep+'*')
+        
+        
+        keep_ratio = 0.95
+        indices_keep = int(keep_ratio * len(tmp_im_list))
+        all_indices = list(range(len(tmp_im_list)))
+        import random
+        random.seed(10)
+        train_indices = random.sample(all_indices, indices_keep)
+        # train_nm_im_gt_list = [train_nm_im_gt_list[i] for i in train_indices]
+        val_indices = [ind for ind in all_indices if ind not in train_indices]
+        # valid_nm_im_gt_list = [train_nm_im_gt_list[i] for i in val_indices]
+        if flag == 'train':
+            tmp_im_list = [tmp_im_list[ind] for ind in train_indices]
+        else:
+            tmp_im_list = [tmp_im_list[ind] for ind in val_indices]
+        
 
         # img_name_dict[im_dirs[i][0]] = tmp_im_list
         print('-im-',datasets[i]["name"],datasets[i]["im_dir"], ': ',len(tmp_im_list))

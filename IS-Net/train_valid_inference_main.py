@@ -523,6 +523,7 @@ def main(train_datasets,
         print("--- create training dataloader ---")
         ## collect training dataset
         train_nm_im_gt_list = get_im_gt_name_dict(train_datasets, flag="train")
+        valid_datasets = train_datasets.copy()
         ## build dataloader for training datasets
         train_dataloaders, train_datasets = create_dataloaders(train_nm_im_gt_list,
                                                              cache_size = hypar["cache_size"],
@@ -680,7 +681,7 @@ if __name__ == "__main__":
 
     if hypar["mode"] == "train":
         hypar["valid_out_dir"] = "" ## for "train" model leave it as "", for "valid"("inference") mode: set it according to your local directory
-        hypar["model_path"] ="../saved_models/customer-dataset-v16" ## model weights saving (or restoring) path
+        hypar["model_path"] ="/home/ubuntu/kartik/DIS/saved_models/customer-dataset-v16" ## model weights saving (or restoring) path
         hypar["restore_model"] = "" ## name of the segmentation model weights .pth for resume training process from last stop or for the inferencing
         hypar["start_ite"] = 0 ## start iteration for the training, can be changed to match the restored training process
         hypar["gt_encoder_model"] = ""
