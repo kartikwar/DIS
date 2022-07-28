@@ -674,8 +674,8 @@ if __name__ == "__main__":
     hypar = {}
 
     ## -- 2.1. configure the model saving or restoring path --
-    # hypar["mode"] = "train"
-    hypar["mode"] = "valid"
+    hypar["mode"] = "train"
+    # hypar["mode"] = "valid"
     ## "train": for training,
     ## "valid": for validation and inferening,
     ## in "valid" mode, it will calculate the accuracy as well as save the prediciton results into the "hypar["valid_out_dir"]", which shouldn't be ""
@@ -685,8 +685,12 @@ if __name__ == "__main__":
     if hypar["mode"] == "train":
         hypar["valid_out_dir"] = "" ## for "train" model leave it as "", for "valid"("inference") mode: set it according to your local directory
         hypar["model_path"] ="/home/ubuntu/kartik/DIS/saved_models/customer-dataset-v16" ## model weights saving (or restoring) path
-        hypar["restore_model"] = "gpu_itr_3400_traLoss_2.8048_traTarLoss_0.4452_valLoss_2.7121_valTarLoss_0.4203_maxF1_0.7656_mae_0.2592_time_0.035212.pth" ## name of the segmentation model weights .pth for resume training process from last stop or for the inferencing
-        hypar["start_ite"] = 0 ## start iteration for the training, can be changed to match the restored training process
+        hypar["restore_model"] = "gpu_itr_42000_traLoss_1.4631_traTarLoss_0.2303_valLoss_1.6305_valTarLoss_0.2538_maxF1_0.8813_mae_0.1574_time_0.031647.pth" ## name of the segmentation model weights .pth for resume training process from last stop or for the inferencing
+        if hypar["restore_model"] == '':
+            hypar["start_ite"] = 0 ## start iteration for the training, can be changed to match the restored training process
+        else:
+            hypar["start_ite"] = int(hypar["restore_model"].split('_')[2])
+            temp = 0
         hypar["gt_encoder_model"] = ""
     else: ## configure the segmentation output path and the to-be-used model weights path
         hypar["valid_out_dir"] = "/home/ubuntu/kartik/DIS/your-results"##"../DIS5K-Results-test" ## output inferenced segmentation maps into this fold
