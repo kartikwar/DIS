@@ -5,3 +5,4 @@ your-results/
 __pycache__/
 .vscode/
 DIS5k-Cache/
+*.out
