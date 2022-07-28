@@ -519,11 +519,12 @@ def main(train_datasets,
     dataloaders_train = []
     dataloaders_valid = []
 
+    valid_cache_dir = valid_datasets[0]['cache_dir']
+
     if(hypar["mode"]=="train"):
         print("--- create training dataloader ---")
         ## collect training dataset
-        train_nm_im_gt_list = get_im_gt_name_dict(train_datasets, flag="train")
-        valid_cache_dir = valid_datasets[0]['cache_dir']
+        train_nm_im_gt_list = get_im_gt_name_dict(train_datasets, hypar, flag="train")
         valid_datasets = train_datasets.copy()
         ## build dataloader for training datasets
         train_dataloaders, train_datasets = create_dataloaders(train_nm_im_gt_list,
@@ -549,7 +550,7 @@ def main(train_datasets,
 
     print("--- create valid dataloader ---")
     ## build dataloader for validation or testing
-    valid_nm_im_gt_list = get_im_gt_name_dict(valid_datasets, flag="valid")
+    valid_nm_im_gt_list = get_im_gt_name_dict(valid_datasets, hypar, flag="valid")
     valid_nm_im_gt_list[0]['cache_dir'] = valid_cache_dir
     ## build dataloader for training datasets
     valid_dataloaders, valid_datasets = create_dataloaders(valid_nm_im_gt_list,
@@ -673,8 +674,8 @@ if __name__ == "__main__":
     hypar = {}
 
     ## -- 2.1. configure the model saving or restoring path --
-    hypar["mode"] = "train"
-    # hypar["mode"] = "valid"
+    # hypar["mode"] = "train"
+    hypar["mode"] = "valid"
     ## "train": for training,
     ## "valid": for validation and inferening,
     ## in "valid" mode, it will calculate the accuracy as well as save the prediciton results into the "hypar["valid_out_dir"]", which shouldn't be ""
@@ -684,13 +685,13 @@ if __name__ == "__main__":
     if hypar["mode"] == "train":
         hypar["valid_out_dir"] = "" ## for "train" model leave it as "", for "valid"("inference") mode: set it according to your local directory
         hypar["model_path"] ="/home/ubuntu/kartik/DIS/saved_models/customer-dataset-v16" ## model weights saving (or restoring) path
-        hypar["restore_model"] = "/home/ubuntu/kartik/DIS/saved_models/customer-dataset-v16/gpu_itr_3400_traLoss_2.8048_traTarLoss_0.4452_valLoss_2.7121_valTarLoss_0.4203_maxF1_0.7656_mae_0.2592_time_0.035212.pth" ## name of the segmentation model weights .pth for resume training process from last stop or for the inferencing
+        hypar["restore_model"] = "gpu_itr_3400_traLoss_2.8048_traTarLoss_0.4452_valLoss_2.7121_valTarLoss_0.4203_maxF1_0.7656_mae_0.2592_time_0.035212.pth" ## name of the segmentation model weights .pth for resume training process from last stop or for the inferencing
         hypar["start_ite"] = 0 ## start iteration for the training, can be changed to match the restored training process
         hypar["gt_encoder_model"] = ""
     else: ## configure the segmentation output path and the to-be-used model weights path
-        hypar["valid_out_dir"] = "../your-results/"##"../DIS5K-Results-test" ## output inferenced segmentation maps into this fold
-        hypar["model_path"] = "../saved_models/customer-dataset-v16" ## load trained weights from this path
-        hypar["restore_model"] = "gpu_itr_10_traLoss_4.1096_traTarLoss_0.5828_valLoss_2.5425_valTarLoss_0.2606_maxF1_0.0_mae_0.1802_time_0.033889.pth"##"isnet.pth" ## name of the to-be-loaded weights
+        hypar["valid_out_dir"] = "/home/ubuntu/kartik/DIS/your-results"##"../DIS5K-Results-test" ## output inferenced segmentation maps into this fold
+        hypar["model_path"] = "/home/ubuntu/kartik/DIS/saved_models/customer-dataset-v16" ## load trained weights from this path
+        hypar["restore_model"] = "gpu_itr_42000_traLoss_1.4631_traTarLoss_0.2303_valLoss_1.6305_valTarLoss_0.2538_maxF1_0.8813_mae_0.1574_time_0.031647.pth"##"isnet.pth" ## name of the to-be-loaded weights
 
     # if hypar["restore_model"]!="":
     #     hypar["start_ite"] = int(hypar["restore_model"].split("_")[2])
